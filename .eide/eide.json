@@ -175,12 +175,6 @@
         "name": "Applications",
         "files": [
           {
-            "path": "applications/VS1053.c"
-          },
-          {
-            "path": "applications/VS1053_MP3.c"
-          },
-          {
             "path": "applications/main.c"
           },
           {
@@ -188,6 +182,12 @@
           },
           {
             "path": "applications/uart_app.c"
+          },
+          {
+            "path": "applications/VS1053_MP3.c"
+          },
+          {
+            "path": "applications/VS1053.c"
           }
         ],
         "folders": []

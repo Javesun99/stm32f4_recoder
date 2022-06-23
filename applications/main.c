@@ -23,7 +23,7 @@ int main(void)
     /* set LED0 pin mode to output */
     rt_pin_mode(LED0_PIN, PIN_MODE_OUTPUT);
     rt_thread_mdelay(1000);
-    // thread_vs();
+    // thread_vs();//已弃用
     mailbox_sample();
     iwdg_sample();
     while (count++)

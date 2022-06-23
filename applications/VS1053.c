@@ -689,6 +689,7 @@ void vs_recoder()
     uint32_t sector = 0;
     uint8_t recflag = 1;
     uint8_t fliter = 6;
+    uint8_t clear_flag=0;//用于清除累计的boomflag
     int fp;
     //fp = open(wavname, O_WRONLY | O_CREAT);
     recoder_enter_rec_mode(1024 * 4);
@@ -718,9 +719,15 @@ void vs_recoder()
                     sum = 0;
                     if (fliter == 0)
                         sum = db_calculate(recbuf); //计算声音强度
+                    clear_flag++;
                     if (sum > 6000)
                     {
                         boomflag++;
+                        if(clear_flag>=200)
+                        {
+                            boomflag=0;
+                            clear_flag=0;
+                        }
                         if (boomflag >= BOOMSET && recflag == 1)
                         {
                             boomsector = sector;
@@ -754,6 +761,7 @@ void vs_recoder()
             sector = 0;
             recflag = 1;
             fliter = 6;
+            clear_flag=0;
         }
     }
 }
