@@ -53,7 +53,7 @@
   "compileConfig": {
     "cpuType": "Cortex-M4",
     "floatingPointHardware": "single",
-    "useCustomScatterFile": false,
+    "useCustomScatterFile": true,
     "scatterFilePath": "board/linker_scripts/link.sct",
     "storageLayout": {
       "RAM": [
@@ -175,6 +175,12 @@
         "name": "Applications",
         "files": [
           {
+            "path": "applications/VS1053.c"
+          },
+          {
+            "path": "applications/VS1053_MP3.c"
+          },
+          {
             "path": "applications/main.c"
           },
           {
@@ -182,12 +188,6 @@
           },
           {
             "path": "applications/uart_app.c"
-          },
-          {
-            "path": "applications/VS1053_MP3.c"
-          },
-          {
-            "path": "applications/VS1053.c"
           }
         ],
         "folders": []
@@ -205,10 +205,10 @@
             "path": "../../../libcpu/arm/common/showmem.c"
           },
           {
-            "path": "../../../libcpu/arm/cortex-m4/cpuport.c"
+            "path": "../../../libcpu/arm/cortex-m4/context_rvds.S"
           },
           {
-            "path": "../../../libcpu/arm/cortex-m4/context_rvds.S"
+            "path": "../../../libcpu/arm/cortex-m4/cpuport.c"
           }
         ],
         "folders": []
@@ -263,6 +263,9 @@
           },
           {
             "path": "../../../components/drivers/src/workqueue.c"
+          },
+          {
+            "path": "../../../components/drivers/watchdog/watchdog.c"
           }
         ],
         "folders": []
@@ -286,6 +289,9 @@
             "path": "../libraries/HAL_Drivers/drv_usart.c"
           },
           {
+            "path": "../libraries/HAL_Drivers/drv_wdt.c"
+          },
+          {
             "path": "../libraries/STM32F4xx_HAL/CMSIS/Device/ST/STM32F4xx/Source/Templates/arm/startup_stm32f405xx.s"
           },
           {
@@ -301,7 +307,16 @@
         "name": "Filesystem",
         "files": [
           {
-            "path": "../../../components/dfs/src/dfs.c"
+            "path": "../../../components/dfs/filesystems/devfs/devfs.c"
+          },
+          {
+            "path": "../../../components/dfs/filesystems/elmfat/dfs_elm.c"
+          },
+          {
+            "path": "../../../components/dfs/filesystems/elmfat/ff.c"
+          },
+          {
+            "path": "../../../components/dfs/filesystems/elmfat/ffunicode.c"
           },
           {
             "path": "../../../components/dfs/src/dfs_file.c"
@@ -313,22 +328,13 @@
             "path": "../../../components/dfs/src/dfs_posix.c"
           },
           {
+            "path": "../../../components/dfs/src/dfs.c"
+          },
+          {
             "path": "../../../components/dfs/src/poll.c"
           },
           {
             "path": "../../../components/dfs/src/select.c"
-          },
-          {
-            "path": "../../../components/dfs/filesystems/devfs/devfs.c"
-          },
-          {
-            "path": "../../../components/dfs/filesystems/elmfat/dfs_elm.c"
-          },
-          {
-            "path": "../../../components/dfs/filesystems/elmfat/ff.c"
-          },
-          {
-            "path": "../../../components/dfs/filesystems/elmfat/ffunicode.c"
           }
         ],
         "folders": []
@@ -337,15 +343,6 @@
         "name": "filesystem-samples",
         "files": [
           {
-            "path": "packages/filesystem_samples-latest/readwrite_sample.c"
-          },
-          {
-            "path": "packages/filesystem_samples-latest/stat_sample.c"
-          },
-          {
-            "path": "packages/filesystem_samples-latest/rename_sample.c"
-          },
-          {
             "path": "packages/filesystem_samples-latest/mkdir_sample.c"
           },
           {
@@ -353,6 +350,15 @@
           },
           {
             "path": "packages/filesystem_samples-latest/readdir_sample.c"
+          },
+          {
+            "path": "packages/filesystem_samples-latest/readwrite_sample.c"
+          },
+          {
+            "path": "packages/filesystem_samples-latest/rename_sample.c"
+          },
+          {
+            "path": "packages/filesystem_samples-latest/stat_sample.c"
           }
         ],
         "folders": []
@@ -463,9 +469,6 @@
             "path": "../libraries/STM32F4xx_HAL/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c"
           },
           {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c"
-          },
-          {
             "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cec.c"
           },
           {
@@ -475,34 +478,49 @@
             "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_crc.c"
           },
           {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp.c"
-          },
-          {
             "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp_ex.c"
           },
           {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c"
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp.c"
           },
           {
             "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c"
           },
           {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c"
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c"
+          },
+          {
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c"
+          },
+          {
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_iwdg.c"
           },
           {
             "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c"
           },
           {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c"
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c"
+          },
+          {
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_qspi.c"
           },
           {
             "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c"
           },
           {
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c"
+          },
+          {
             "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rng.c"
           },
           {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c"
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc_ex.c"
+          },
+          {
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc.c"
+          },
+          {
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c"
           },
           {
             "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c"
@@ -511,16 +529,10 @@
             "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_usart.c"
           },
           {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c"
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_wwdg.c"
           },
           {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_qspi.c"
-          },
-          {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc.c"
-          },
-          {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc_ex.c"
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c"
           }
         ],
         "folders": []
@@ -528,6 +540,9 @@
       {
         "name": "peripheral-samples",
         "files": [
+          {
+            "path": "packages/peripheral_samples-latest/iwdg_sample.c"
+          },
           {
             "path": "packages/peripheral_samples-latest/rtc_sample.c"
           },
@@ -720,6 +735,7 @@
           "../../../components/drivers/spi",
           "../../../components/drivers/include",
           "../../../components/drivers/spi/sfud/inc",
+          "../../../components/drivers/include",
           "../../../components/drivers/include",
           "board",
           "board/CubeMX_Config/Inc",

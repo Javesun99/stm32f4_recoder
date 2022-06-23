@@ -6,9 +6,7 @@
     ],
     "settings": {
         "files.associations": {
-            "rtthread.h": "c",
-            "drv_usart.h": "c",
-            "uart_app.h": "c"
+            "main.h": "c"
         }
     },
     "extensions": {},

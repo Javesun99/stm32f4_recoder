@@ -336,7 +336,7 @@
               <MiscControls />
               <Define>STM32F405xx, USE_HAL_DRIVER, RT_USING_ARM_LIBC, __RTTHREAD__</Define>
               <Undefine />
-              <IncludePath>applications;.;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\drivers\spi;..\..\..\components\drivers\include;..\..\..\components\drivers\spi\sfud\inc;..\..\..\components\drivers\include;board;board\CubeMX_Config\Inc;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;..\..\..\components\dfs\include;..\..\..\components\dfs\filesystems\devfs;..\..\..\components\dfs\filesystems\elmfat;packages\filesystem_samples-latest;..\..\..\components\finsh;.;..\..\..\include;packages\kernel_samples-latest\en;..\..\..\components\libc\compilers\armlibc;..\..\..\components\libc\compilers\common;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include;packages\peripheral_samples-latest;packages\SEGGER_RTT-latest;packages\SEGGER_RTT-latest\RTT</IncludePath>
+              <IncludePath>applications;.;..\..\..\libcpu\arm\common;..\..\..\libcpu\arm\cortex-m4;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\drivers\include;..\..\..\components\drivers\spi;..\..\..\components\drivers\include;..\..\..\components\drivers\spi\sfud\inc;..\..\..\components\drivers\include;..\..\..\components\drivers\include;board;board\CubeMX_Config\Inc;..\libraries\HAL_Drivers;..\libraries\HAL_Drivers\config;..\..\..\components\dfs\include;..\..\..\components\dfs\filesystems\devfs;..\..\..\components\dfs\filesystems\elmfat;packages\filesystem_samples-latest;..\..\..\components\finsh;.;..\..\..\include;packages\kernel_samples-latest\en;..\..\..\components\libc\compilers\armlibc;..\..\..\components\libc\compilers\common;..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;..\libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;..\libraries\STM32F4xx_HAL\CMSIS\Include;packages\peripheral_samples-latest;packages\SEGGER_RTT-latest;packages\SEGGER_RTT-latest\RTT</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -567,6 +567,13 @@
               <FilePath>..\..\..\components\drivers\src\workqueue.c</FilePath>
             </File>
           </Files>
+          <Files>
+            <File>
+              <FileName>watchdog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\components\drivers\watchdog\watchdog.c</FilePath>
+            </File>
+          </Files>
           <GroupOption>
             <GroupArmAds>
               <Cads>
@@ -629,6 +636,13 @@
               <FileName>drv_rtc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\libraries\HAL_Drivers\drv_rtc.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>drv_wdt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\HAL_Drivers\drv_wdt.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -1093,9 +1107,30 @@
               <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rtc_ex.c</FilePath>
             </File>
           </Files>
+          <Files>
+            <File>
+              <FileName>stm32f4xx_hal_iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_iwdg.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>stm32f4xx_hal_wwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_wwdg.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>peripheral-samples</GroupName>
+          <Files>
+            <File>
+              <FileName>iwdg_sample.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>packages\peripheral_samples-latest\iwdg_sample.c</FilePath>
+            </File>
+          </Files>
           <Files>
             <File>
               <FileName>rtc_sample.c</FileName>

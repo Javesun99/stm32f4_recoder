@@ -11,6 +11,7 @@
 #include "vs1053.h"
 #include <dfs_posix.h> /* 当需要使用文件操作时，需要包含这个头文件 */
 #include "uart_app.h"
+#include "stdio.h"
 #define DBG_COLOR
 #define DBG_TAG "vs1053"
 #define DBG_LVL DBG_LOG
@@ -689,14 +690,14 @@ void vs_recoder()
     uint8_t recflag = 1;
     uint8_t fliter = 6;
     int fp;
-    fp = open(wavname, O_WRONLY | O_CREAT);
+    //fp = open(wavname, O_WRONLY | O_CREAT);
     recoder_enter_rec_mode(1024 * 4);
     while (VS_RD_Reg(SPI_HDAT1) >> 8);
-    if (fp)
-    { // fp
-        while (1)
+    while (1)
+    {
+        fp = open(wavname, O_WRONLY | O_CREAT );
+        if(fp)
         {
-            fp = open(wavname, O_WRONLY | O_CREAT );
             while (1)
             {
                 rt_thread_mdelay(1);
@@ -808,12 +809,20 @@ void rec_func(uint16_t boomsector)
     fp_temp = open("temp.wav", O_RDONLY);
     if (boomsector <= 100)
     {
-        dfs_file_lseek(fd_get(fp_temp), 0);
+        lseek(fp_temp, 0,SEEK_SET);
     }
     else
     {
-        dfs_file_lseek(fd_get(fp_temp), 512 * (boomsector - 100));
+        lseek(fp_temp, 512 * (boomsector - 100),SEEK_SET);
     }
+    // if (boomsector <= 100)
+    // {
+    //     dfs_file_lseek(fd_get(fp_temp), 0);//需要用Fd_put来释放句柄，所以选择使用标准的lseek来实现
+    // }
+    // else
+    // {
+    //     dfs_file_lseek(fd_get(fp_temp), 512 * (boomsector - 100));
+    // }
     if (fp&&fp_temp)
     {
         recbuf = rt_malloc(512);
@@ -826,20 +835,13 @@ void rec_func(uint16_t boomsector)
             read(fp_temp, recbuf, 512);
             write(fp, recbuf, 512);
             count++;
-            // rt_memset(recbuf, 0, 512);
         }
-        rt_kprintf("fp:%d\r\n", fp);
-        rt_kprintf("fp_temp:%d\r\n", fp_temp);
         rt_free(recbuf);
-        // close(fp_temp);
-        // close(fp);
-        rt_kprintf("fp closed:%d\r\n", close(fp));
-        rt_kprintf("fp_temp closed:%d\r\n", close(fp_temp));
-        // rt_kprintf("fp closed:%d\r\n", fp);
-        // rt_kprintf("fp_temp closed:%d\r\n", fp_temp);
         rt_kprintf("recoder over:%s\r\n", wavname);
         rt_mb_send(&mb, (rt_uint32_t)&wavname);
     }
+    close(fp_temp);
+    close(fp);
 }
 
 void video_trans(uint8_t *name)
@@ -848,10 +850,10 @@ void video_trans(uint8_t *name)
     uint8_t *recbuf;
     uint8_t count=0;
     video_struct.MES_COUNT=0;
-    fpp=open(wavname, O_RDONLY);
+    fpp=open(name, O_RDONLY);
     if(fpp){
         recbuf = rt_malloc(512);
-        dfs_file_lseek(fd_get(fpp), 44);
+        lseek(fpp, 44,SEEK_SET);
         struct_init(&video_struct);
         while(count<200)
         {
