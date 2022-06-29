@@ -11,7 +11,7 @@
 #include "vs1053.h"
 #include <dfs_posix.h> /* 当需要使用文件操作时，需要包含这个头文件 */
 #include "uart_app.h"
-#include "stdio.h"
+#include "crc16.h"
 #define DBG_COLOR
 #define DBG_TAG "vs1053"
 #define DBG_LVL DBG_LOG
@@ -25,7 +25,6 @@ uint32_t db_calculate(uint8_t *buf);
 void rec_func(uint16_t boomsector);
 #define BOOMSET 3
 #define LED1_PIN GET_PIN(B, 8)
-
 SPI_HandleTypeDef SPI1_Handler; // SPI1¾ä±ú
 _vs10xx_obj vsset = {
     250, //音量:220
@@ -701,7 +700,7 @@ void vs_recoder()
         {
             while (1)
             {
-                rt_thread_mdelay(1);
+                rt_thread_mdelay(5);
                 w = VS_RD_Reg(SPI_HDAT1);
                 if ((w >= 256) && (w < 896))
                 {
@@ -720,7 +719,7 @@ void vs_recoder()
                     if (fliter == 0)
                         sum = db_calculate(recbuf); //计算声音强度
                     clear_flag++;
-                    if (sum > 6000)
+                    if (sum > 10000)
                     {
                         boomflag++;
                         if(clear_flag>=200)
@@ -738,7 +737,19 @@ void vs_recoder()
                     write(fp, recbuf, 512);
                     rt_memset(recbuf, 0, 512);
                     sector++;
-                    if (sector >= 8000) //限定temp的大小 到达8000后重新开始录
+                    if(sector >= 7900 && boomflag >= BOOMSET && count <= 200)
+                    {
+                        count++;
+                        if (count >= 200)
+                        {
+                            close(fp);
+                            rec_func(boomsector);
+                            rt_kprintf("recoder over:%s\r\n", wavname);
+                            break;
+                        }
+                        continue;
+                    }
+                    if (sector >= 8000 && count==0) //限定temp的大小 到达8000后重新开始录 并且此刻没在录音
                     {
                         close(fp);
                         break;
@@ -838,7 +849,7 @@ void rec_func(uint16_t boomsector)
         wavheader.riff.ChunkSize = 512 * 200 + 36;
         wavheader.data.ChunkSize = 512 * 200;
         write(fp, &wavheader, sizeof(__WaveHeader));
-        while (count < 200)
+        while (count < 200)//到199为止，正好200个包
         {
             read(fp_temp, recbuf, 512);
             write(fp, recbuf, 512);
@@ -857,7 +868,8 @@ void video_trans(uint8_t *name)
     int fpp;
     uint8_t *recbuf;
     uint8_t count=0;
-    video_struct.MES_COUNT=0;
+    uint16_t crc;
+    video_struct.MES_COUNT[1]=0;
     fpp=open(name, O_RDONLY);
     if(fpp){
         recbuf = rt_malloc(512);
@@ -865,16 +877,18 @@ void video_trans(uint8_t *name)
         struct_init(&video_struct);
         while(count<200)
         {
-
+            rt_thread_mdelay(5);
             read(fpp,recbuf,512);
             rt_memcpy(video_struct.DATA,recbuf,512);
-            // rt_kprintf("%d\r\n",sizeof(video_struct));
-            uart_dma_data((uint8_t*)&video_struct);
-            video_struct.MES_COUNT++;
+            crc = crc16_cal((uint8_t*)&video_struct,552);
+            video_struct.LCRC = crc;
+            video_struct.HCRC = crc>>8;
+            dma_data((uint8_t*)&video_struct);
+            video_struct.MES_COUNT[1]++;
             count++;
         }
         count=0;
-        video_struct.MES_COUNT=0;
+        video_struct.MES_COUNT[1]=0;
         rt_free(recbuf);
         close(fpp);
     }

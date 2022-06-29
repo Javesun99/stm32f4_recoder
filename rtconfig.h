@@ -15,7 +15,7 @@
 #define RT_USING_HOOK
 #define RT_USING_IDLE_HOOK
 #define RT_IDLE_HOOK_LIST_SIZE 4
-#define IDLE_THREAD_STACK_SIZE 256
+#define IDLE_THREAD_STACK_SIZE 8192
 #define RT_DEBUG
 #define RT_DEBUG_COLOR
 
@@ -237,6 +237,12 @@
 
 /* entertainment: terminal games and other interesting software packages */
 
+#define PKG_USING_CRCLIB
+#define CRCLIB_USING_CRC16
+#define CRC16_USING_CONST_TABLE
+#define CRC16_POLY_A001
+#define CRC16_POLY 40961
+#define PKG_USING_CRCLIB_V102
 #define SOC_FAMILY_STM32
 #define SOC_SERIES_STM32F4
 

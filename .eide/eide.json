@@ -16,6 +16,7 @@
             "./.",
             "./../../../libcpu/arm/common",
             "./../../../libcpu/arm/cortex-m4",
+            "./packages/crclib-v1.02/inc",
             "./../../../components/drivers/include",
             "./../../../components/drivers/spi",
             "./../../../components/drivers/spi/sfud/inc",
@@ -53,7 +54,7 @@
   "compileConfig": {
     "cpuType": "Cortex-M4",
     "floatingPointHardware": "single",
-    "useCustomScatterFile": true,
+    "useCustomScatterFile": false,
     "scatterFilePath": "board/linker_scripts/link.sct",
     "storageLayout": {
       "RAM": [
@@ -205,10 +206,37 @@
             "path": "../../../libcpu/arm/common/showmem.c"
           },
           {
-            "path": "../../../libcpu/arm/cortex-m4/context_rvds.S"
+            "path": "../../../libcpu/arm/cortex-m4/cpuport.c"
           },
           {
-            "path": "../../../libcpu/arm/cortex-m4/cpuport.c"
+            "path": "../../../libcpu/arm/cortex-m4/context_rvds.S"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "crclib",
+        "files": [
+          {
+            "path": "packages/crclib-v1.02/src/crc16.c"
+          },
+          {
+            "path": "packages/crclib-v1.02/src/crc16_ex.c"
+          },
+          {
+            "path": "packages/crclib-v1.02/src/crc16_ex_sample.c"
+          },
+          {
+            "path": "packages/crclib-v1.02/src/crc32.c"
+          },
+          {
+            "path": "packages/crclib-v1.02/src/crc32_ex.c"
+          },
+          {
+            "path": "packages/crclib-v1.02/src/crc8.c"
+          },
+          {
+            "path": "packages/crclib-v1.02/src/crc8_ex.c"
           }
         ],
         "folders": []
@@ -307,16 +335,7 @@
         "name": "Filesystem",
         "files": [
           {
-            "path": "../../../components/dfs/filesystems/devfs/devfs.c"
-          },
-          {
-            "path": "../../../components/dfs/filesystems/elmfat/dfs_elm.c"
-          },
-          {
-            "path": "../../../components/dfs/filesystems/elmfat/ff.c"
-          },
-          {
-            "path": "../../../components/dfs/filesystems/elmfat/ffunicode.c"
+            "path": "../../../components/dfs/src/dfs.c"
           },
           {
             "path": "../../../components/dfs/src/dfs_file.c"
@@ -328,13 +347,22 @@
             "path": "../../../components/dfs/src/dfs_posix.c"
           },
           {
-            "path": "../../../components/dfs/src/dfs.c"
-          },
-          {
             "path": "../../../components/dfs/src/poll.c"
           },
           {
             "path": "../../../components/dfs/src/select.c"
+          },
+          {
+            "path": "../../../components/dfs/filesystems/devfs/devfs.c"
+          },
+          {
+            "path": "../../../components/dfs/filesystems/elmfat/dfs_elm.c"
+          },
+          {
+            "path": "../../../components/dfs/filesystems/elmfat/ff.c"
+          },
+          {
+            "path": "../../../components/dfs/filesystems/elmfat/ffunicode.c"
           }
         ],
         "folders": []
@@ -343,6 +371,15 @@
         "name": "filesystem-samples",
         "files": [
           {
+            "path": "packages/filesystem_samples-latest/readwrite_sample.c"
+          },
+          {
+            "path": "packages/filesystem_samples-latest/stat_sample.c"
+          },
+          {
+            "path": "packages/filesystem_samples-latest/rename_sample.c"
+          },
+          {
             "path": "packages/filesystem_samples-latest/mkdir_sample.c"
           },
           {
@@ -350,15 +387,6 @@
           },
           {
             "path": "packages/filesystem_samples-latest/readdir_sample.c"
-          },
-          {
-            "path": "packages/filesystem_samples-latest/readwrite_sample.c"
-          },
-          {
-            "path": "packages/filesystem_samples-latest/rename_sample.c"
-          },
-          {
-            "path": "packages/filesystem_samples-latest/stat_sample.c"
           }
         ],
         "folders": []
@@ -469,6 +497,9 @@
             "path": "../libraries/STM32F4xx_HAL/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c"
           },
           {
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c"
+          },
+          {
             "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cec.c"
           },
           {
@@ -478,49 +509,34 @@
             "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_crc.c"
           },
           {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp_ex.c"
-          },
-          {
             "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp.c"
           },
           {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c"
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp_ex.c"
           },
           {
             "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c"
           },
           {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c"
-          },
-          {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_iwdg.c"
-          },
-          {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c"
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c"
           },
           {
             "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c"
           },
           {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_qspi.c"
-          },
-          {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c"
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c"
           },
           {
             "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c"
           },
           {
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c"
+          },
+          {
             "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rng.c"
           },
           {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc_ex.c"
-          },
-          {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc.c"
-          },
-          {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c"
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c"
           },
           {
             "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c"
@@ -529,10 +545,22 @@
             "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_usart.c"
           },
           {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_wwdg.c"
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c"
           },
           {
-            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c"
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_qspi.c"
+          },
+          {
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc.c"
+          },
+          {
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc_ex.c"
+          },
+          {
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_iwdg.c"
+          },
+          {
+            "path": "../libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_wwdg.c"
           }
         ],
         "folders": []
@@ -574,7 +602,7 @@
   },
   "excludeList": [],
   "outDir": "build",
-  "deviceName": null,
+  "deviceName": "STM32F405RGTx",
   "packDir": null,
   "uploadConfig": {
     "bin": "",
@@ -729,6 +757,7 @@
           ".",
           "../../../libcpu/arm/common",
           "../../../libcpu/arm/cortex-m4",
+          "packages/crclib-v1.02/inc",
           "../../../components/drivers/include",
           "../../../components/drivers/include",
           "../../../components/drivers/include",
