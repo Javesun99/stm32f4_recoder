@@ -19,29 +19,12 @@ void struct_init(Video_struct *video_struct)
 {
     video_struct->HEAD[0]=0xAA;
     video_struct->HEAD[1]=0x55;
-    video_struct->LENGTH[0]=0x02;
-    video_struct->LENGTH[1]=0x2A;
-    video_struct->ID[0]=0x00;
-    video_struct->ID[1]=0x00;
-    video_struct->ID[2]=0x00;
-    video_struct->ID[3]=0x00;
-    video_struct->ID[4]=0x00;
-    video_struct->ID[5]=0x00;
-    video_struct->ID[6]=0x00;
-    video_struct->ID[7]=0x00;
-    video_struct->ID[8]=0x00;
-    video_struct->ID[9]=0x00;
-    video_struct->ID[10]=0x00;
-    video_struct->ID[11]=0x00;
-    video_struct->ID[12]=0x00;
-    video_struct->ID[13]=0x00;
-    video_struct->ID[14]=0x00;
-    video_struct->ID[15]=0x00;
-    video_struct->ID[16]=0x00;
+    video_struct->LENGTH[0]=0x11;
+    video_struct->LENGTH[1]=0x02;
     video_struct->FRAME_TYPE=0x11;
     video_struct->MES_TYPE=0x58;
-    video_struct->MES_TIMES[0]=0x00;
-    video_struct->MES_TIMES[1]=0xC8;
+    video_struct->MES_TIMES[0]=0xC8;
+    video_struct->MES_TIMES[1]=0x00;
     video_struct->MES_COUNT[0]=0x00;
     video_struct->MES_COUNT[1]=0x00;
     video_struct->WARNING=0x00;
@@ -83,7 +66,7 @@ INIT_APP_EXPORT(uart_dma_init);
 
 void dma_data(uint8_t *buf)
 {
-    rt_device_write(serial, 0, buf, 554);
+    rt_device_write(serial, 0, buf, 537);
 }
 
 void sturct_trans(uint8_t *buf)

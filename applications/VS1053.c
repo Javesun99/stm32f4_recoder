@@ -719,7 +719,7 @@ void vs_recoder()
                     if (fliter == 0)
                         sum = db_calculate(recbuf); //计算声音强度
                     clear_flag++;
-                    if (sum > 10000)
+                    if (sum > 12000)
                     {
                         boomflag++;
                         if(clear_flag>=200)
@@ -869,7 +869,7 @@ void video_trans(uint8_t *name)
     uint8_t *recbuf;
     uint8_t count=0;
     uint16_t crc;
-    video_struct.MES_COUNT[1]=0;
+    video_struct.MES_COUNT[0]=0;
     fpp=open(name, O_RDONLY);
     if(fpp){
         recbuf = rt_malloc(512);
@@ -880,15 +880,15 @@ void video_trans(uint8_t *name)
             rt_thread_mdelay(5);
             read(fpp,recbuf,512);
             rt_memcpy(video_struct.DATA,recbuf,512);
-            crc = crc16_cal((uint8_t*)&video_struct,552);
+            crc = crc16_cal((uint8_t*)&video_struct,535);
             video_struct.LCRC = crc;
             video_struct.HCRC = crc>>8;
             dma_data((uint8_t*)&video_struct);
-            video_struct.MES_COUNT[1]++;
+            video_struct.MES_COUNT[0]++;
             count++;
         }
         count=0;
-        video_struct.MES_COUNT[1]=0;
+        video_struct.MES_COUNT[0]=0;
         rt_free(recbuf);
         close(fpp);
     }

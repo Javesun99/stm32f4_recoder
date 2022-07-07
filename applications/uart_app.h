@@ -5,7 +5,6 @@ __packed typedef struct
 {
     uint8_t   HEAD[2];
     uint8_t   LENGTH[2];//4
-    uint8_t    ID[17];
     uint8_t    FRAME_TYPE;
     uint8_t    MES_TYPE;//20
     uint8_t   MES_TIMES[2];
