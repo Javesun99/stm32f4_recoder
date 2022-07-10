@@ -23,6 +23,7 @@ extern Video_struct video_struct;
 extern struct rt_mailbox mb;
 uint32_t db_calculate(uint8_t *buf);
 void rec_func(uint16_t boomsector);
+uint16_t crc16table(uint8_t *ptr, uint8_t len);
 #define BOOMSET 3
 #define LED1_PIN GET_PIN(B, 8)
 SPI_HandleTypeDef SPI1_Handler; // SPI1¾ä±ú
@@ -977,3 +978,5 @@ void video_trans(uint8_t *name)
 //    }
 // }
 // MSH_CMD_EXPORT(vs10xx, vs1053);
+
+

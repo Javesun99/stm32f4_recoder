@@ -11,7 +11,7 @@
 #include <rtthread.h>
 #include <rtdevice.h>
 #include <board.h>
-
+#include "crc16.h"
 /* defined the LED0 pin: PB1 */
 #define LED0_PIN    GET_PIN(B, 6)
 extern void thread_vs(void);
