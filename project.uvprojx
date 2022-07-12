@@ -336,7 +336,7 @@
               <MiscControls />
               <Define>STM32F405xx, USE_HAL_DRIVER, RT_USING_ARM_LIBC, __RTTHREAD__</Define>
               <Undefine />
-              <IncludePath>applications;.;rt-thread\libcpu\arm\common;rt-thread\libcpu\arm\cortex-m4;packages\crclib-v1.02\inc;rt-thread\components\drivers\include;rt-thread\components\drivers\include;rt-thread\components\drivers\include;rt-thread\components\drivers\spi;rt-thread\components\drivers\include;rt-thread\components\drivers\spi\sfud\inc;rt-thread\components\drivers\include;rt-thread\components\drivers\include;board;board\CubeMX_Config\Inc;libraries\HAL_Drivers;libraries\HAL_Drivers\config;rt-thread\components\dfs\include;rt-thread\components\dfs\filesystems\devfs;rt-thread\components\dfs\filesystems\elmfat;packages\filesystem_samples-latest;rt-thread\components\finsh;.;rt-thread\include;packages\kernel_samples-latest\en;rt-thread\components\libc\compilers\armlibc;rt-thread\components\libc\compilers\common;libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;libraries\STM32F4xx_HAL\CMSIS\Include;packages\peripheral_samples-latest;packages\SEGGER_RTT-latest;packages\SEGGER_RTT-latest\RTT</IncludePath>
+              <IncludePath>applications;.;rt-thread\libcpu\arm\common;rt-thread\libcpu\arm\cortex-m4;packages\crclib-v1.02\inc;rt-thread\components\drivers\include;rt-thread\components\drivers\include;rt-thread\components\drivers\include;rt-thread\components\drivers\spi;rt-thread\components\drivers\include;rt-thread\components\drivers\spi\sfud\inc;rt-thread\components\drivers\include;rt-thread\components\drivers\include;board;board\CubeMX_Config\Inc;libraries\HAL_Drivers;libraries\HAL_Drivers\config;libraries\HAL_Drivers\drv_flash;rt-thread\components\dfs\include;rt-thread\components\dfs\filesystems\devfs;rt-thread\components\dfs\filesystems\elmfat;packages\filesystem_samples-latest;rt-thread\components\finsh;.;rt-thread\include;packages\kernel_samples-latest\en;rt-thread\components\libc\compilers\armlibc;rt-thread\components\libc\compilers\common;libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Inc;libraries\STM32F4xx_HAL\CMSIS\Device\ST\STM32F4xx\Include;libraries\STM32F4xx_HAL\CMSIS\Include;packages\peripheral_samples-latest;packages\SEGGER_RTT-latest;packages\SEGGER_RTT-latest\RTT</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -688,6 +688,13 @@
               <FileName>drv_rtc.c</FileName>
               <FileType>1</FileType>
               <FilePath>libraries\HAL_Drivers\drv_rtc.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>drv_flash_f4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\HAL_Drivers\drv_flash\drv_flash_f4.c</FilePath>
             </File>
           </Files>
           <Files>
@@ -1171,6 +1178,27 @@
               <FileName>stm32f4xx_hal_wwdg.c</FileName>
               <FileType>1</FileType>
               <FilePath>libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_wwdg.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>stm32f4xx_hal_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>stm32f4xx_hal_flash_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash_ex.c</FilePath>
+            </File>
+          </Files>
+          <Files>
+            <File>
+              <FileName>stm32f4xx_hal_flash_ramfunc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>libraries\STM32F4xx_HAL\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_flash_ramfunc.c</FilePath>
             </File>
           </Files>
         </Group>

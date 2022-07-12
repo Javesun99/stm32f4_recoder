@@ -24,6 +24,8 @@
             "./board/CubeMX_Config/Inc",
             "./libraries/HAL_Drivers",
             "./libraries/HAL_Drivers/config",
+            "./libraries/HAL_Drivers/drv_flash",
+            "./packages/fal-v1.0.0/inc",
             "./rt-thread/components/dfs/include",
             "./rt-thread/components/dfs/filesystems/devfs",
             "./rt-thread/components/dfs/filesystems/elmfat",
@@ -323,10 +325,31 @@
             "path": "libraries/HAL_Drivers/drv_rtc.c"
           },
           {
+            "path": "libraries/HAL_Drivers/drv_flash/drv_flash_f4.c"
+          },
+          {
             "path": "libraries/HAL_Drivers/drv_wdt.c"
           },
           {
             "path": "libraries/HAL_Drivers/drv_common.c"
+          }
+        ],
+        "folders": []
+      },
+      {
+        "name": "fal",
+        "files": [
+          {
+            "path": "packages/fal-v1.0.0/src/fal_flash.c"
+          },
+          {
+            "path": "packages/fal-v1.0.0/src/fal_partition.c"
+          },
+          {
+            "path": "packages/fal-v1.0.0/src/fal_rtt.c"
+          },
+          {
+            "path": "packages/fal-v1.0.0/src/fal.c"
           }
         ],
         "folders": []
@@ -561,6 +584,15 @@
           },
           {
             "path": "libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_wwdg.c"
+          },
+          {
+            "path": "libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c"
+          },
+          {
+            "path": "libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c"
+          },
+          {
+            "path": "libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c"
           }
         ],
         "folders": []
@@ -770,6 +802,8 @@
           "board/CubeMX_Config/Inc",
           "libraries/HAL_Drivers",
           "libraries/HAL_Drivers/config",
+          "libraries/HAL_Drivers/drv_flash",
+          "packages/fal-v1.0.0/inc",
           "rt-thread/components/dfs/include",
           "rt-thread/components/dfs/filesystems/devfs",
           "rt-thread/components/dfs/filesystems/elmfat",

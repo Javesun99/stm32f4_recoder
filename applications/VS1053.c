@@ -15,17 +15,18 @@
 #define DBG_COLOR
 #define DBG_TAG "vs1053"
 #define DBG_LVL DBG_LOG
+#define BOOMSET 3
+#define Threshold 15000
 #include <rtdbg.h>
 time_t now;
 uint32_t boomsector = 0;
 char wavname[20];
 extern Video_struct video_struct;
 extern struct rt_mailbox mb;
+extern uint8_t LED_FLAG;
 uint32_t db_calculate(uint8_t *buf);
 void rec_func(uint16_t boomsector);
 uint16_t crc16table(uint8_t *ptr, uint8_t len);
-#define BOOMSET 3
-#define LED1_PIN GET_PIN(B, 8)
 SPI_HandleTypeDef SPI1_Handler; // SPI1¾ä±ú
 _vs10xx_obj vsset = {
     250, //音量:220
@@ -623,59 +624,59 @@ __WaveHeader vs1053_record_stop() //停止录音并且保存录音
     return pWav_Header;
 }
 
-void vs10xx_test()
-{
-    __WaveHeader wavheader;
-    uint8_t recbuf[512] = {0};
-    uint16_t w;
-    uint16_t idx;
-    uint8_t count = 0;
-    uint8_t wavname[20];
-    int fp;
-    rt_pin_mode(LED1_PIN, PIN_MODE_OUTPUT);
-    rt_pin_write(LED1_PIN, PIN_HIGH);
-    now = time(RT_NULL);
-    rt_sprintf(wavname, "%d.wav", now);
-    fp = open(wavname, O_WRONLY | O_CREAT);
-    //    recbuf = rt_malloc(512);
-    recoder_enter_rec_mode(1024 * 4);
-    while (VS_RD_Reg(SPI_HDAT1) >> 8)
-        ;
-    if (fp)
-    {
-        wavheader = vs1053_record_stop();
-        wavheader.riff.ChunkSize = 512 * 200 + 36;
-        wavheader.data.ChunkSize = 512 * 200;
-        write(fp, &wavheader, sizeof(__WaveHeader));
-        while (1)
-        {
-            w = VS_RD_Reg(SPI_HDAT1);
-            if ((w >= 256) && (w < 896))
-            {
-                idx = 0;
-                while (idx < 512) //一次读取512字节
-                {
-                    w = VS_RD_Reg(SPI_HDAT0);
-                    recbuf[idx++] = w & 0XFF;
-                    recbuf[idx++] = w >> 8;
-                }
-                write(fp, recbuf, 512);
-                count++;
-                rt_memset(recbuf, 0, 512);
-                if (count >= 200)
-                {
-                    close(fp);
-                    rt_kprintf("recoder over:%s\r\n", wavname);
-                    rt_pin_write(LED1_PIN, PIN_LOW);
-                    rt_thread_mdelay(500);
-                    rt_pin_write(LED1_PIN, PIN_HIGH);
-                    break;
-                }
-            }
-        }
-    }
-}
-MSH_CMD_EXPORT(vs10xx_test, vs1053 sample);
+// void vs10xx_test()
+// {
+//     __WaveHeader wavheader;
+//     uint8_t recbuf[512] = {0};
+//     uint16_t w;
+//     uint16_t idx;
+//     uint8_t count = 0;
+//     uint8_t wavname[20];
+//     int fp;
+//     rt_pin_mode(LED1_PIN, PIN_MODE_OUTPUT);
+//     rt_pin_write(LED1_PIN, PIN_HIGH);
+//     now = time(RT_NULL);
+//     rt_sprintf(wavname, "%d.wav", now);
+//     fp = open(wavname, O_WRONLY | O_CREAT);
+//     //    recbuf = rt_malloc(512);
+//     recoder_enter_rec_mode(1024 * 4);
+//     while (VS_RD_Reg(SPI_HDAT1) >> 8)
+//         ;
+//     if (fp)
+//     {
+//         wavheader = vs1053_record_stop();
+//         wavheader.riff.ChunkSize = 512 * 200 + 36;
+//         wavheader.data.ChunkSize = 512 * 200;
+//         write(fp, &wavheader, sizeof(__WaveHeader));
+//         while (1)
+//         {
+//             w = VS_RD_Reg(SPI_HDAT1);
+//             if ((w >= 256) && (w < 896))
+//             {
+//                 idx = 0;
+//                 while (idx < 512) //一次读取512字节
+//                 {
+//                     w = VS_RD_Reg(SPI_HDAT0);
+//                     recbuf[idx++] = w & 0XFF;
+//                     recbuf[idx++] = w >> 8;
+//                 }
+//                 write(fp, recbuf, 512);
+//                 count++;
+//                 rt_memset(recbuf, 0, 512);
+//                 if (count >= 200)
+//                 {
+//                     close(fp);
+//                     rt_kprintf("recoder over:%s\r\n", wavname);
+//                     rt_pin_write(LED1_PIN, PIN_LOW);
+//                     rt_thread_mdelay(500);
+//                     rt_pin_write(LED1_PIN, PIN_HIGH);
+//                     break;
+//                 }
+//             }
+//         }
+//     }
+// }
+// MSH_CMD_EXPORT(vs10xx_test, vs1053 sample);
 
 void vs_recoder()
 {
@@ -720,7 +721,7 @@ void vs_recoder()
                     if (fliter == 0)
                         sum = db_calculate(recbuf); //计算声音强度
                     clear_flag++;
-                    if (sum > 12000)
+                    if (sum > Threshold)
                     {
                         boomflag++;
                         if(clear_flag>=200)
@@ -873,12 +874,13 @@ void video_trans(uint8_t *name)
     video_struct.MES_COUNT[0]=0;
     fpp=open(name, O_RDONLY);
     if(fpp){
+        LED_FLAG=1;
         recbuf = rt_malloc(512);
         lseek(fpp, 44,SEEK_SET);
         struct_init(&video_struct);
         while(count<200)
         {
-            rt_thread_mdelay(5);
+            rt_thread_mdelay(250);
             read(fpp,recbuf,512);
             rt_memcpy(video_struct.DATA,recbuf,512);
             crc = crc16_cal((uint8_t*)&video_struct,535);
@@ -892,6 +894,7 @@ void video_trans(uint8_t *name)
         video_struct.MES_COUNT[0]=0;
         rt_free(recbuf);
         close(fpp);
+        LED_FLAG=0;
     }
 }
 

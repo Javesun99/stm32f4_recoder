@@ -268,6 +268,7 @@
 #define BSP_USING_SPI2
 #define BSP_SPI2_TX_USING_DMA
 #define BSP_USING_WDT
+#define BSP_USING_ON_CHIP_FLASH
 
 /* Board extended module Drivers */
 
