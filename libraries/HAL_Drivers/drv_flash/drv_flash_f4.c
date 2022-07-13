@@ -359,62 +359,92 @@ __exit:
     return size;
 }
 
+//#if defined(PKG_USING_FAL)
+
+//static int fal_flash_read_16k(long offset, rt_uint8_t *buf, size_t size);
+//static int fal_flash_read_64k(long offset, rt_uint8_t *buf, size_t size);
+//static int fal_flash_read_128k(long offset, rt_uint8_t *buf, size_t size);
+
+//static int fal_flash_write_16k(long offset, const rt_uint8_t *buf, size_t size);
+//static int fal_flash_write_64k(long offset, const rt_uint8_t *buf, size_t size);
+//static int fal_flash_write_128k(long offset, const rt_uint8_t *buf, size_t size);
+
+//static int fal_flash_erase_16k(long offset, size_t size);
+//static int fal_flash_erase_64k(long offset, size_t size);
+//static int fal_flash_erase_128k(long offset, size_t size);
+
+//const struct fal_flash_dev stm32_onchip_flash_16k = { "onchip_flash_16k", STM32_FLASH_START_ADRESS_16K, FLASH_SIZE_GRANULARITY_16K, (16 * 1024), {NULL, fal_flash_read_16k, fal_flash_write_16k, fal_flash_erase_16k} };
+//const struct fal_flash_dev stm32_onchip_flash_64k = { "onchip_flash_64k", STM32_FLASH_START_ADRESS_64K, FLASH_SIZE_GRANULARITY_64K, (64 * 1024), {NULL, fal_flash_read_64k, fal_flash_write_64k, fal_flash_erase_64k} };
+//const struct fal_flash_dev stm32_onchip_flash_128k = { "onchip_flash_128k", STM32_FLASH_START_ADRESS_128K, FLASH_SIZE_GRANULARITY_128K, (128 * 1024), {NULL, fal_flash_read_128k, fal_flash_write_128k, fal_flash_erase_128k} };
+
+//static int fal_flash_read_16k(long offset, rt_uint8_t *buf, size_t size)
+//{
+//    return stm32_flash_read(stm32_onchip_flash_16k.addr + offset, buf, size);
+//}
+//static int fal_flash_read_64k(long offset, rt_uint8_t *buf, size_t size)
+//{
+//    return stm32_flash_read(stm32_onchip_flash_64k.addr + offset, buf, size);
+//}
+//static int fal_flash_read_128k(long offset, rt_uint8_t *buf, size_t size)
+//{
+//    return stm32_flash_read(stm32_onchip_flash_128k.addr + offset, buf, size);
+//}
+
+//static int fal_flash_write_16k(long offset, const rt_uint8_t *buf, size_t size)
+//{
+//    return stm32_flash_write(stm32_onchip_flash_16k.addr + offset, buf, size);
+//}
+//static int fal_flash_write_64k(long offset, const rt_uint8_t *buf, size_t size)
+//{
+//    return stm32_flash_write(stm32_onchip_flash_64k.addr + offset, buf, size);
+//}
+//static int fal_flash_write_128k(long offset, const rt_uint8_t *buf, size_t size)
+//{
+//    return stm32_flash_write(stm32_onchip_flash_128k.addr + offset, buf, size);
+//}
+
+//static int fal_flash_erase_16k(long offset, size_t size)
+//{
+//    return stm32_flash_erase(stm32_onchip_flash_16k.addr + offset, size);
+//}
+//static int fal_flash_erase_64k(long offset, size_t size)
+//{
+//    return stm32_flash_erase(stm32_onchip_flash_64k.addr + offset, size);
+//}
+//static int fal_flash_erase_128k(long offset, size_t size)
+//{
+//    return stm32_flash_erase(stm32_onchip_flash_128k.addr + offset, size);
+//}
+
+//#endif
+//#endif /* BSP_USING_ON_CHIP_FLASH */
 #if defined(PKG_USING_FAL)
 
-static int fal_flash_read_16k(long offset, rt_uint8_t *buf, size_t size);
-static int fal_flash_read_64k(long offset, rt_uint8_t *buf, size_t size);
-static int fal_flash_read_128k(long offset, rt_uint8_t *buf, size_t size);
+static int fal_flash_read(long offset, rt_uint8_t *buf, size_t size);
 
-static int fal_flash_write_16k(long offset, const rt_uint8_t *buf, size_t size);
-static int fal_flash_write_64k(long offset, const rt_uint8_t *buf, size_t size);
-static int fal_flash_write_128k(long offset, const rt_uint8_t *buf, size_t size);
+static int fal_flash_write(long offset, const rt_uint8_t *buf, size_t size);
 
-static int fal_flash_erase_16k(long offset, size_t size);
-static int fal_flash_erase_64k(long offset, size_t size);
-static int fal_flash_erase_128k(long offset, size_t size);
+static int fal_flash_erase(long offset, size_t size);
 
-const struct fal_flash_dev stm32_onchip_flash_16k = { "onchip_flash_16k", STM32_FLASH_START_ADRESS_16K, FLASH_SIZE_GRANULARITY_16K, (16 * 1024), {NULL, fal_flash_read_16k, fal_flash_write_16k, fal_flash_erase_16k} };
-const struct fal_flash_dev stm32_onchip_flash_64k = { "onchip_flash_64k", STM32_FLASH_START_ADRESS_64K, FLASH_SIZE_GRANULARITY_64K, (64 * 1024), {NULL, fal_flash_read_64k, fal_flash_write_64k, fal_flash_erase_64k} };
-const struct fal_flash_dev stm32_onchip_flash_128k = { "onchip_flash_128k", STM32_FLASH_START_ADRESS_128K, FLASH_SIZE_GRANULARITY_128K, (128 * 1024), {NULL, fal_flash_read_128k, fal_flash_write_128k, fal_flash_erase_128k} };
+const struct fal_flash_dev stm32_onchip_flash_16k = { "stm32_onchip", STM32_FLASH_START_ADRESS, STM32_FLASH_SIZE, (16 * 1024), {NULL, fal_flash_read, fal_flash_write, fal_flash_erase} };
 
-static int fal_flash_read_16k(long offset, rt_uint8_t *buf, size_t size)
+static int fal_flash_read(long offset, rt_uint8_t *buf, size_t size)
 {
     return stm32_flash_read(stm32_onchip_flash_16k.addr + offset, buf, size);
 }
-static int fal_flash_read_64k(long offset, rt_uint8_t *buf, size_t size)
-{
-    return stm32_flash_read(stm32_onchip_flash_64k.addr + offset, buf, size);
-}
-static int fal_flash_read_128k(long offset, rt_uint8_t *buf, size_t size)
-{
-    return stm32_flash_read(stm32_onchip_flash_128k.addr + offset, buf, size);
-}
 
-static int fal_flash_write_16k(long offset, const rt_uint8_t *buf, size_t size)
+
+static int fal_flash_write(long offset, const rt_uint8_t *buf, size_t size)
 {
     return stm32_flash_write(stm32_onchip_flash_16k.addr + offset, buf, size);
 }
-static int fal_flash_write_64k(long offset, const rt_uint8_t *buf, size_t size)
-{
-    return stm32_flash_write(stm32_onchip_flash_64k.addr + offset, buf, size);
-}
-static int fal_flash_write_128k(long offset, const rt_uint8_t *buf, size_t size)
-{
-    return stm32_flash_write(stm32_onchip_flash_128k.addr + offset, buf, size);
-}
 
-static int fal_flash_erase_16k(long offset, size_t size)
+
+static int fal_flash_erase(long offset, size_t size)
 {
     return stm32_flash_erase(stm32_onchip_flash_16k.addr + offset, size);
 }
-static int fal_flash_erase_64k(long offset, size_t size)
-{
-    return stm32_flash_erase(stm32_onchip_flash_64k.addr + offset, size);
-}
-static int fal_flash_erase_128k(long offset, size_t size)
-{
-    return stm32_flash_erase(stm32_onchip_flash_128k.addr + offset, size);
-}
+
 
 #endif
 #endif /* BSP_USING_ON_CHIP_FLASH */

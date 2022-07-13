@@ -16,10 +16,10 @@
 #define DBG_TAG "vs1053"
 #define DBG_LVL DBG_LOG
 #define BOOMSET 3
-#define Threshold 15000
 #include <rtdbg.h>
 time_t now;
 uint32_t boomsector = 0;
+uint32_t Threshold=15000;
 char wavname[20];
 extern Video_struct video_struct;
 extern struct rt_mailbox mb;
@@ -733,18 +733,20 @@ void vs_recoder()
                         {
                             boomsector = sector;
                             recflag = 0;
+                            LED_FLAG=2;
                             rt_kprintf("boomsector:%d\r\n", boomsector);
                         }
                     }
                     write(fp, recbuf, 512);
                     rt_memset(recbuf, 0, 512);
                     sector++;
-                    if(sector >= 7900 && boomflag >= BOOMSET && count <= 200)
+                    if(sector >= 7900 && boomflag >= BOOMSET && count <= 200)//如果在7900后发生故障则继续录200个包，理论上只需要再录100个即可
                     {
                         count++;
                         if (count >= 200)
                         {
                             close(fp);
+                            LED_FLAG=0;
                             rec_func(boomsector);
                             rt_kprintf("recoder over:%s\r\n", wavname);
                             break;
@@ -762,6 +764,7 @@ void vs_recoder()
                         if (count >= 200)
                         {
                             close(fp);
+                            LED_FLAG=0;
                             rec_func(boomsector);
                             rt_kprintf("recoder over:%s\r\n", wavname);
                             break;
@@ -838,7 +841,7 @@ void rec_func(uint16_t boomsector)
     }
     // if (boomsector <= 100)
     // {
-    //     dfs_file_lseek(fd_get(fp_temp), 0);//需要用Fd_put来释放句柄，所以选择使用标准的lseek来实现
+    //     dfs_file_lseek(fd_get(fp_temp), 0);//需要用fd_put来释放句柄，所以选择使用标准的lseek来实现
     // }
     // else
     // {
@@ -880,7 +883,7 @@ void video_trans(uint8_t *name)
         struct_init(&video_struct);
         while(count<200)
         {
-            rt_thread_mdelay(250);
+            rt_thread_mdelay(300);
             read(fpp,recbuf,512);
             rt_memcpy(video_struct.DATA,recbuf,512);
             crc = crc16_cal((uint8_t*)&video_struct,535);

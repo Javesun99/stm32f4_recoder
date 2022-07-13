@@ -179,6 +179,15 @@
 
 /* tools packages */
 
+#define PKG_USING_EASYFLASH
+#define PKG_EASYFLASH_ENV
+#define PKG_EASYFLASH_ERASE_GRAN 131072
+#define PKG_EASYFLASH_WRITE_GRAN_8BITS
+#define PKG_EASYFLASH_WRITE_GRAN 8
+#define PKG_EASYFLASH_START_ADDR 0
+#define PKG_EASYFLASH_DEBUG
+#define PKG_USING_EASYFLASH_V410
+#define PKG_EASYFLASH_VER_NUM 0x40100
 #define PKG_USING_SEGGER_RTT
 #define SEGGER_RTT_ENABLE
 #define SEGGER_RTT_MAX_NUM_UP_BUFFERS 3
@@ -203,6 +212,12 @@
 
 /* Micrium: Micrium software products porting for RT-Thread */
 
+#define PKG_USING_FAL
+#define FAL_DEBUG_CONFIG
+#define FAL_DEBUG 1
+#define FAL_PART_HAS_TABLE_CFG
+#define PKG_USING_FAL_V10000
+#define PKG_FAL_VER_NUM 0x10000
 
 /* peripheral libraries and drivers */
 

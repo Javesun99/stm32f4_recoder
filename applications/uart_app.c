@@ -1,5 +1,6 @@
 #include "uart_app.h"
 #include "drv_usart.h"
+#include <easyflash.h>
 /*
  * 程序清单：这是一个串口设备 开启 DMA 模式后使用例程
  * 例程导出了 uart_dma_sample 命令到控制终端

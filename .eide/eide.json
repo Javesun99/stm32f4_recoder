@@ -25,6 +25,7 @@
             "./libraries/HAL_Drivers",
             "./libraries/HAL_Drivers/config",
             "./libraries/HAL_Drivers/drv_flash",
+            "./packages/EasyFlash-v4.1.0/inc",
             "./packages/fal-v1.0.0/inc",
             "./rt-thread/components/dfs/include",
             "./rt-thread/components/dfs/filesystems/devfs",
@@ -337,8 +338,44 @@
         "folders": []
       },
       {
+        "name": "EasyFlash",
+        "files": [
+          {
+            "path": "packages/EasyFlash-v4.1.0/src/easyflash.c"
+          },
+          {
+            "path": "packages/EasyFlash-v4.1.0/src/ef_cmd.c"
+          },
+          {
+            "path": "packages/EasyFlash-v4.1.0/src/ef_env.c"
+          },
+          {
+            "path": "packages/EasyFlash-v4.1.0/src/ef_env_legacy.c"
+          },
+          {
+            "path": "packages/EasyFlash-v4.1.0/src/ef_env_legacy_wl.c"
+          },
+          {
+            "path": "packages/EasyFlash-v4.1.0/src/ef_fal_port.c"
+          },
+          {
+            "path": "packages/EasyFlash-v4.1.0/src/ef_iap.c"
+          },
+          {
+            "path": "packages/EasyFlash-v4.1.0/src/ef_log.c"
+          },
+          {
+            "path": "packages/EasyFlash-v4.1.0/src/ef_utils.c"
+          }
+        ],
+        "folders": []
+      },
+      {
         "name": "fal",
         "files": [
+          {
+            "path": "packages/fal-v1.0.0/src/fal.c"
+          },
           {
             "path": "packages/fal-v1.0.0/src/fal_flash.c"
           },
@@ -347,9 +384,6 @@
           },
           {
             "path": "packages/fal-v1.0.0/src/fal_rtt.c"
-          },
-          {
-            "path": "packages/fal-v1.0.0/src/fal.c"
           }
         ],
         "folders": []
@@ -803,6 +837,7 @@
           "libraries/HAL_Drivers",
           "libraries/HAL_Drivers/config",
           "libraries/HAL_Drivers/drv_flash",
+          "packages/EasyFlash-v4.1.0/inc",
           "packages/fal-v1.0.0/inc",
           "rt-thread/components/dfs/include",
           "rt-thread/components/dfs/filesystems/devfs",
