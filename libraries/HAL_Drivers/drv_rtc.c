@@ -10,7 +10,6 @@
  */
 
 #include "board.h"
-
 #ifdef BSP_USING_ONCHIP_RTC
 
 #ifndef RTC_BKP_DR1
@@ -305,4 +304,50 @@ int rt_hw_rtc_init(void)
 }
 INIT_DEVICE_EXPORT(rt_hw_rtc_init);
 
+int rtc_time_init()
+{
+    rt_err_t ret = RT_EOK;
+    time_t now;
+
+    /* 设置日期 */
+    ret = set_date(2022, 7, 6);
+    if (ret != RT_EOK)
+    {
+        rt_kprintf("set RTC date failed\n");
+        return ret;
+    }
+
+    /* 设置时间 */
+    ret = set_time(15, 32, 20);
+    if (ret != RT_EOK)
+    {
+        rt_kprintf("set RTC time failed\n");
+        return ret;
+    }
+
+    /* 延时3秒 */
+    rt_thread_mdelay(3000);
+
+    /* 获取时间 */
+    now = time(RT_NULL);
+    rt_kprintf("%s\n", ctime(&now));
+
+    return ret;
+}
+
+
+
+//判断是否初始化
+void rt_rtc_is_init(void)
+{
+    if (HAL_RTCEx_BKUPRead(&RTC_Handler, RTC_BKP_DR1) == BKUP_REG_DATA)
+    {
+        return;
+    }
+    else
+    {
+        rtc_time_init();
+    }
+}
+INIT_APP_EXPORT(rt_rtc_is_init);
 #endif /* BSP_USING_ONCHIP_RTC */

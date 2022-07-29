@@ -22,7 +22,6 @@ extern void thread_vs(void);
 extern int mailbox_sample(void);
 extern int iwdg_sample(void);
 extern int uart_data_sample();
-
 void thread_test_entry(void)
 {
     fal_init ();
@@ -42,7 +41,6 @@ MSH_CMD_EXPORT(print_reboot,Print reboot);
 
 
 
-
 int main(void)
 {
     int count = 1;
@@ -54,7 +52,7 @@ int main(void)
     mailbox_sample();
     uart_data_sample();
 //    fal_init();
-    thread_test_entry();
+   thread_test_entry();
     while (count++)
     {
         if(LED_FLAG==0)
