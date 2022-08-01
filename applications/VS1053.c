@@ -721,14 +721,14 @@ void vs_recoder()
                     if (fliter == 0)
                         sum = db_calculate(recbuf); //计算声音强度
                     clear_flag++;
+                    if(clear_flag>=20)//每20个包 清除一次boomflag 防止boomflag的不停累计 造成误判
+                    {
+                        boomflag=0;
+                        clear_flag=0;
+                    }
                     if (sum > Threshold)
                     {
                         boomflag++;
-                        if(clear_flag>=200)
-                        {
-                            boomflag=0;
-                            clear_flag=0;
-                        }
                         if (boomflag >= BOOMSET && recflag == 1)
                         {
                             boomsector = sector;
@@ -753,7 +753,7 @@ void vs_recoder()
                         }
                         continue;
                     }
-                    if (sector >= 8000 && count==0) //限定temp的大小 到达8000后重新开始录 并且此刻没在录音
+                    if (sector >= 8000 && count==0) //限定temp的大小 到达8000后重新开始录
                     {
                         close(fp);
                         break;
@@ -781,7 +781,6 @@ void vs_recoder()
         }
     }
 }
-MSH_CMD_EXPORT(vs_recoder, vsrecoder);
 
 uint32_t db_calculate(uint8_t *buf)
 {
