@@ -719,21 +719,23 @@ void vs_recoder()
                     }
                     sum = 0;
                     if (fliter == 0)
-                        sum = db_calculate(recbuf); //计算声音强度
-                    clear_flag++;
-                    if(clear_flag>=20)//每20个包 清除一次boomflag 防止boomflag的不停累计 造成误判
                     {
-                        boomflag=0;
-                        clear_flag=0;
+                        sum = db_calculate(recbuf); //计算声音强度
                     }
+                    clear_flag++;
                     if (sum > Threshold)
                     {
                         boomflag++;
+                        if(clear_flag>=20 && boomflag < BOOMSET && boomflag > 0)//每20个包 清除一次boomflag 防止boomflag的不停累计 造成误判
+                        {
+                            boomflag=0;
+                            clear_flag=0;
+                        }
                         if (boomflag >= BOOMSET && recflag == 1)
                         {
+                            LED_FLAG=2;
                             boomsector = sector;
                             recflag = 0;
-                            LED_FLAG=2;
                             rt_kprintf("boomsector:%d\r\n", boomsector);
                         }
                     }
@@ -746,6 +748,7 @@ void vs_recoder()
                         if (count >= 200)
                         {
                             close(fp);
+                            count=0;
                             LED_FLAG=0;
                             rec_func(boomsector);
                             rt_kprintf("recoder over:%s\r\n", wavname);
@@ -764,6 +767,7 @@ void vs_recoder()
                         if (count >= 200)
                         {
                             close(fp);
+                            count=0;
                             LED_FLAG=0;
                             rec_func(boomsector);
                             rt_kprintf("recoder over:%s\r\n", wavname);
@@ -795,27 +799,27 @@ uint32_t db_calculate(uint8_t *buf)
     return sum;
 }
 
-void vs_thread_entry(void *parameter)
-{
-    vs_recoder();
-}
+// void vs_thread_entry(void *parameter)
+// {
+//     vs_recoder();
+// }
 
-int thread_vs(void)
-{
-    rt_thread_t tid;
+// int thread_vs(void)
+// {
+//     rt_thread_t tid;
 
-    tid = rt_thread_create("vs_thread", vs_thread_entry, RT_NULL,
-                           4096, 10, 5);
-    if (tid != RT_NULL)
-    {
-        rt_thread_startup(tid);
-    }
-    else
-    {
-        LOG_E("vs_thread err!");
-    }
-    return RT_EOK;
-}
+//     tid = rt_thread_create("vs_thread", vs_thread_entry, RT_NULL,
+//                            4096, 10, 1);
+//     if (tid != RT_NULL)
+//     {
+//         rt_thread_startup(tid);
+//     }
+//     else
+//     {
+//         LOG_E("vs_thread err!");
+//     }
+//     return RT_EOK;
+// }
 
 void rec_func(uint16_t boomsector)
 {
@@ -876,13 +880,13 @@ void video_trans(uint8_t *name)
     video_struct.MES_COUNT[0]=0;
     fpp=open(name, O_RDONLY);
     if(fpp){
-        LED_FLAG=1;
         recbuf = rt_malloc(512);
         lseek(fpp, 44,SEEK_SET);
         struct_init(&video_struct);
         while(count<200)
         {
-            rt_thread_mdelay(300);
+            LED_FLAG=1;
+            rt_thread_mdelay(400);
             read(fpp,recbuf,512);
             rt_memcpy(video_struct.DATA,recbuf,512);
             crc = crc16_cal((uint8_t*)&video_struct,535);

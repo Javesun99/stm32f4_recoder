@@ -43,7 +43,6 @@ MSH_CMD_EXPORT(print_reboot,Print reboot);
 
 int main(void)
 {
-    int count = 1;
     /* set LED0 pin mode to output */
     rt_pin_mode(LED0_PIN, PIN_MODE_OUTPUT);
     iwdg_sample();
@@ -52,8 +51,8 @@ int main(void)
     mailbox_sample();
     uart_data_sample();
 //    fal_init();
-   thread_test_entry();
-    while (count++)
+//    thread_test_entry();
+    while (1)
     {
         if(LED_FLAG==0)
         {
