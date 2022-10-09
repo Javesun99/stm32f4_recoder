@@ -886,7 +886,7 @@ void video_trans(uint8_t *name)
         while(count<200)
         {
             LED_FLAG=1;
-            rt_thread_mdelay(400);
+//            rt_thread_mdelay(400);
             read(fpp,recbuf,512);
             rt_memcpy(video_struct.DATA,recbuf,512);
             crc = crc16_cal((uint8_t*)&video_struct,535);

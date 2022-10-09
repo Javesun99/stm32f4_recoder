@@ -1,0 +1,37 @@
+[
+ {
+  "path": "/packages/tools/EasyFlash", 
+  "ver": "v4.1.0", 
+  "name": "EASYFLASH"
+ }, 
+ {
+  "path": "/packages/tools/SEGGER_RTT", 
+  "ver": "latest", 
+  "name": "SEGGER_RTT"
+ }, 
+ {
+  "path": "/packages/system/fal", 
+  "ver": "v1.0.0", 
+  "name": "FAL"
+ }, 
+ {
+  "path": "/packages/misc/samples/kernel_samples", 
+  "ver": "latest", 
+  "name": "KERNEL_SAMPLES"
+ }, 
+ {
+  "path": "/packages/misc/samples/filesystem_samples", 
+  "ver": "latest", 
+  "name": "FILESYSTEM_SAMPLES"
+ }, 
+ {
+  "path": "/packages/misc/samples/peripheral_samples", 
+  "ver": "latest", 
+  "name": "PERIPHERAL_SAMPLES"
+ }, 
+ {
+  "path": "/packages/misc/crclib", 
+  "ver": "v1.02", 
+  "name": "CRCLIB"
+ }
+]
