@@ -49,7 +49,7 @@ int main(void)
     rt_thread_mdelay(2000);
     // thread_vs();//已弃用
     mailbox_sample();
-    uart_data_sample();
+    // uart_data_sample();
 //    fal_init();
 //    thread_test_entry();
     while (1)
