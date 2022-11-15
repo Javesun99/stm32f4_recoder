@@ -94,7 +94,7 @@ int VS_Init(void)
     SPI1_Handler.Init.CLKPolarity = SPI_POLARITY_HIGH;
     SPI1_Handler.Init.CLKPhase = SPI_PHASE_2EDGE;
     SPI1_Handler.Init.NSS = SPI_NSS_SOFT;
-    SPI1_Handler.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16; // 256
+    SPI1_Handler.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64; // 256
     SPI1_Handler.Init.FirstBit = SPI_FIRSTBIT_MSB;
     SPI1_Handler.Init.TIMode = SPI_TIMODE_DISABLE;
     SPI1_Handler.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -595,7 +595,7 @@ void recoder_enter_rec_mode(uint16_t agc)
     //假设d=0,并2倍频,外部晶振为12.288M.那么Fc=(2*12288000)/256*6=16Khz
     //如果是线性PCM,采样率直接就写采样值
     VS_WR_Cmd(SPI_BASS, 0x0000);
-    VS_WR_Cmd(SPI_AICTRL0, 16000);              //设置采样率,设置为8Khz
+    VS_WR_Cmd(SPI_AICTRL0, 8000);              //设置采样率,设置为8Khz
     VS_WR_Cmd(SPI_AICTRL1, agc);               //设置增益,0,自动增益.1024相当于1倍,512相当于0.5倍,最大值65535=64倍
     VS_WR_Cmd(SPI_AICTRL2, 0);                 //设置增益最大值,0,代表最大值65536=64X
     VS_WR_Cmd(SPI_AICTRL3, 6);                 //左通道(MIC单声道输入)
@@ -615,7 +615,7 @@ __WaveHeader vs1053_record_stop() //停止录音并且保存录音
     pWav_Header.fmt.ChunkSize = 16;                            //大小为16个字节
     pWav_Header.fmt.AudioFormat = 0x01;                        // 0X01,表示PCM;0X01,表示IMA ADPCM
     pWav_Header.fmt.NumOfChannels = 1;                         //单声道
-    pWav_Header.fmt.SampleRate = 16000;                         // 8Khz采样率 采样速率
+    pWav_Header.fmt.SampleRate = 8000;                         // 8Khz采样率 采样速率
     pWav_Header.fmt.ByteRate = pWav_Header.fmt.SampleRate * 2; // 16位,即2个字节
     pWav_Header.fmt.BlockAlign = 2;                            //块大小,2个字节为一个块
     pWav_Header.fmt.BitsPerSample = 16;                        // 16位PCM
