@@ -94,7 +94,7 @@ int VS_Init(void)
     SPI1_Handler.Init.CLKPolarity = SPI_POLARITY_HIGH;
     SPI1_Handler.Init.CLKPhase = SPI_PHASE_2EDGE;
     SPI1_Handler.Init.NSS = SPI_NSS_SOFT;
-    SPI1_Handler.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64; // 256
+    SPI1_Handler.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32; // 256
     SPI1_Handler.Init.FirstBit = SPI_FIRSTBIT_MSB;
     SPI1_Handler.Init.TIMode = SPI_TIMODE_DISABLE;
     SPI1_Handler.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
