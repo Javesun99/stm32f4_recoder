@@ -221,8 +221,19 @@
 
 /* peripheral libraries and drivers */
 
+/* sensors drivers */
+
+
+/* touch drivers */
+
+
+/* Kendryte SDK */
+
 
 /* AI packages */
+
+
+/* Signal Processing and Control Algorithm Packages */
 
 
 /* miscellaneous packages */
@@ -258,6 +269,40 @@
 #define CRC16_POLY_A001
 #define CRC16_POLY 40961
 #define PKG_USING_CRCLIB_V102
+
+/* Arduino libraries */
+
+
+/* Projects */
+
+
+/* Sensors */
+
+
+/* Display */
+
+
+/* Timing */
+
+
+/* Data Processing */
+
+
+/* Data Storage */
+
+/* Communication */
+
+
+/* Device Control */
+
+
+/* Other */
+
+/* Signal IO */
+
+
+/* Uncategorized */
+
 #define SOC_FAMILY_STM32
 #define SOC_SERIES_STM32F4
 
@@ -275,7 +320,7 @@
 #define BSP_UART1_RX_USING_DMA
 #define BSP_UART1_TX_USING_DMA
 #define BSP_USING_ONCHIP_RTC
-#define BSP_RTC_USING_LSI
+#define BSP_RTC_USING_LSE
 #define BSP_USING_SPI1
 #define BSP_SPI1_TX_USING_DMA
 #define BSP_SPI1_RX_USING_DMA
