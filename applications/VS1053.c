@@ -605,23 +605,23 @@ void recoder_enter_rec_mode(uint16_t agc)
     VS_Load_Patch((uint16_t *)wav_plugin, 40); // VS1053的WAV录音需要patch
 }
 
-__WaveHeader vs1053_record_stop() //停止录音并且保存录音
+void vs1053_record_stop(__WaveHeader * pWav_Header) //初始化结构体
 {
-    __WaveHeader pWav_Header;
-    pWav_Header.riff.ChunkID = 0x46464952; //"RIFF"
-    pWav_Header.riff.ChunkSize = 0;
-    pWav_Header.riff.Format = 0x45564157;                      //"WAVE"
-    pWav_Header.fmt.ChunkID = 0x20746D66;                      //"fmt "
-    pWav_Header.fmt.ChunkSize = 16;                            //大小为16个字节
-    pWav_Header.fmt.AudioFormat = 0x01;                        // 0X01,表示PCM;0X01,表示IMA ADPCM
-    pWav_Header.fmt.NumOfChannels = 1;                         //单声道
-    pWav_Header.fmt.SampleRate = 8000;                         // 8Khz采样率 采样速率
-    pWav_Header.fmt.ByteRate = pWav_Header.fmt.SampleRate * 2; // 16位,即2个字节
-    pWav_Header.fmt.BlockAlign = 2;                            //块大小,2个字节为一个块
-    pWav_Header.fmt.BitsPerSample = 16;                        // 16位PCM
-    pWav_Header.data.ChunkID = 0x61746164;                     //"data"
-    pWav_Header.data.ChunkSize = 0;                            //数据大小
-    return pWav_Header;
+    // __WaveHeader pWav_Header;
+    pWav_Header->riff.ChunkID = 0x46464952; //"RIFF"
+    pWav_Header->riff.ChunkSize = 0;
+    pWav_Header->riff.Format = 0x45564157;                      //"WAVE"
+    pWav_Header->fmt.ChunkID = 0x20746D66;                      //"fmt "
+    pWav_Header->fmt.ChunkSize = 16;                            //大小为16个字节
+    pWav_Header->fmt.AudioFormat = 0x01;                        // 0X01,表示PCM;0X01,表示IMA ADPCM
+    pWav_Header->fmt.NumOfChannels = 1;                         //单声道
+    pWav_Header->fmt.SampleRate = 8000;                         // 8Khz采样率 采样速率
+    pWav_Header->fmt.ByteRate = pWav_Header->fmt.SampleRate * 2; // 16位,即2个字节
+    pWav_Header->fmt.BlockAlign = 2;                            //块大小,2个字节为一个块
+    pWav_Header->fmt.BitsPerSample = 16;                        // 16位PCM
+    pWav_Header->data.ChunkID = 0x61746164;                     //"data"
+    pWav_Header->data.ChunkSize = 0;                            //数据大小
+    // return pWav_Header;
 }
 
 // void vs10xx_test()
@@ -853,7 +853,7 @@ void rec_func(uint16_t boomsector)
     if (fp&&fp_temp)
     {
         recbuf = rt_malloc(512);
-        wavheader = vs1053_record_stop();
+        vs1053_record_stop(&wavheader);
         wavheader.riff.ChunkSize = 512 * 200 + 36;
         wavheader.data.ChunkSize = 512 * 200;
         write(fp, &wavheader, sizeof(__WaveHeader));
